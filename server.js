@@ -25,7 +25,7 @@ app.use(session({
     resave: false,
     secret: 'secretKey',
     store: MongoStore.create({mongoUrl:`mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.o7pgm.mongodb.net/${MONGO_DB_NAME}?retryWrites=true&w=majority`}),
-    cookie:{maxAge: 60000}
+    cookie:{maxAge: 600000}
 }));
 
 app.use(passport.initialize());

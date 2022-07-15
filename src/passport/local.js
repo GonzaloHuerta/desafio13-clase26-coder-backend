@@ -2,6 +2,15 @@ import passport from 'passport';
 import { Strategy } from 'passport-local';
 import { usuariosDao } from '../daos/index.js';
 import {UsuariosDaoMongoDb} from '../daos/usuarios/UsuariosDaoMongoDb.js';
+import bcrypt, { compare } from 'bcrypt';
+
+function encriptar(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(5));
+}
+
+function comparar(password, hashDb){
+    return bcrypt.compareSync(password, hashDb);
+}
 
 const localStrategy = Strategy;
 
@@ -18,35 +27,44 @@ passport.use('register', new localStrategy({
     const nuevoUsuario = new UsuariosDaoMongoDb();
     const obj = {
         email: email,
-        password: password
+        password: encriptar(password)
     }
     nuevoUsuario.email = email;
-    nuevoUsuario.password = password;
+    nuevoUsuario.password = encriptar(password);
     await nuevoUsuario.create(obj);
     done(null, nuevoUsuario);
 }))
 
 passport.serializeUser((usuario, done)=>{
-    console.log(usuario)
-    done(null, usuario.id);
+    done(null, usuario.email);
 })
 
-passport.deserializeUser(async(id, done)=>{
-    const usuario = await usuariosDao.getById(id);
+passport.deserializeUser(async(email, done)=>{
+    const usuario = await usuariosDao.getByEmail(email);
     done(null, usuario);
 })
+
+function isValidPassword(){
+
+}
 
 passport.use('login', new localStrategy({
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
 },async(req, email, password, done)=>{
-    const usuarioDb = await usuariosDao.findByEmail(email);
+    const usuarioDb = await usuariosDao.getByEmail(email);
     console.log(usuarioDb);
     if(!usuarioDb){
+        console.log("entra acá")
         return done(null, false);
     }
-    return done(null, usuarioDb);
+    if(!comparar(password, usuarioDb.password)){
+        console.log("Contraseña incorrecta");
+        return done(null, false)
+    }
+
+    done(null, usuarioDb);
 }))
 
 
