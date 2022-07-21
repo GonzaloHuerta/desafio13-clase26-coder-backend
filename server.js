@@ -6,6 +6,10 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import './src/passport/local.js';
 import passport from 'passport';
+import apiRoutes from './src/routes/apiRoutes.js';
+import infoRoutes from './src/routes/infoRoutes.js';
+
+//const apiRoutes = require('./routes/routesProductos');
 
 const MONGO_USER = process.env.MONGO_USER;
 const MONGO_PASS = process.env.MONGO_PASS;
@@ -37,60 +41,8 @@ app.use(express.urlencoded({extended: true}));
 
 const mensajes = await api.getAll();
 
-function isAuth(req, res, next){
-    if(req.isAuthenticated()){
-        next()
-    }else{
-        res.render('login')
-    }
-}
-
-app.get('/', isAuth, (req, res)=>{
-    console.log("req.user: ", req.user)
-    res.render('home', {logueado: true, nombre: req.user.email}); 
-})
-
-app.get('/login', (req, res)=>{
-    if(req.session.user){
-        res.redirect('/')
-    }else{
-        res.render('login');
-    }
-})
-
-app.post('/login', passport.authenticate('login', {
-    failureRedirect: '/error-login',
-    successRedirect: '/'
-}))
-
-app.get('/error-login', (req, res)=>{
-    res.render('error-login');
-})
-
-app.get('/logout', (req, res)=>{
-    const nombre = req.session.user;
-    req.session.destroy(err=>{
-        res.render('hasta-luego', {nombre: nombre})
-    })
-})
-
-app.get('/register', (req, res)=>{
-    if(req.session.user){
-        res.redirect('/')
-    }else{
-        res.render('register');
-    }
-})
-
-app.post('/register', passport.authenticate('register',{
-    failureRedirect: '/error-register',
-    successRedirect: '/login'
-}));
-
-app.get('/error-register', (req, res)=>{
-    res.render('error-register');
-})
-
+app.use('/', apiRoutes);
+app.use('/info', infoRoutes);
 
 io.on('connection', (socket)=>{
     console.log("Cliente conectado", socket.id);;
@@ -104,7 +56,7 @@ io.on('connection', (socket)=>{
     })
 })
 
-const PORT = 8080;
+const PORT = 8081;
 httpServer.listen(PORT, ()=>{
     console.log("Corriendo en el puerto ", PORT)
 })
