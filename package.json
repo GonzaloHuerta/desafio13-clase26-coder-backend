@@ -5,7 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --experimental-json-modules server.js"
+    "start": "nodemon --experimental-json-modules server.js",
+    "dev": "node --experimental-json-modules server.js"
   },
   "author": "",
   "license": "ISC",
