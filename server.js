@@ -8,8 +8,12 @@ import './src/passport/local.js';
 import passport from 'passport';
 import apiRoutes from './src/routes/apiRoutes.js';
 import infoRoutes from './src/routes/infoRoutes.js';
+import apiRandomRoutes from './src/routes/apiRandomRoutes.js';
+import minimist from 'minimist';
 
-//const apiRoutes = require('./routes/routesProductos');
+//ejecutar server así: npm run dev --puerto 3030
+const argumentos = minimist(process.argv)
+console.log("ppp: ", argumentos._[2])
 
 const MONGO_USER = process.env.MONGO_USER;
 const MONGO_PASS = process.env.MONGO_PASS;
@@ -43,6 +47,7 @@ const mensajes = await api.getAll();
 
 app.use('/', apiRoutes);
 app.use('/info', infoRoutes);
+app.use('/api/randoms', apiRandomRoutes);
 
 io.on('connection', (socket)=>{
     console.log("Cliente conectado", socket.id);;
@@ -56,7 +61,7 @@ io.on('connection', (socket)=>{
     })
 })
 
-const PORT = 8080;
+const PORT = argumentos._[2] || 8080;
 httpServer.listen(PORT, ()=>{
     console.log("Corriendo en el puerto ", PORT)
 })
