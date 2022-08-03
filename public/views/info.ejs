@@ -12,7 +12,7 @@
         <div class="alert alert-warning mt-4 mb-4" role="alert">
             <div class="row">
                 <div class="col">
-                    <h2>Argumentos de entrada</h2>
+                    <h2 class="mb-3">Argumentos de entrada</h2>
                     <ul>
                         <% for (item of argumentos) { %>
                           <li> <%= item %> </li>
@@ -25,6 +25,9 @@
                     <h2>Versión de Node</h2>
                     <%= versionNode %>
                     <hr />
+                    <h2>Memoria total reservada</h2>
+                    <%= usoDeMemoria %>
+                    <hr />
                     <h2>Path de ejecución</h2>
                     <%= pathEjecucion %>
                     <hr />
@@ -33,6 +36,9 @@
                     <hr />
                     <h2>Carpeta del proyecto</h2>
                     <%= carpetaProyecto %>
+                    <hr />
+                    <h2>Número de procesadores</h2>
+                    <%= numeroDeProcesadores %>
                 </div>
             </div>
         </div>
