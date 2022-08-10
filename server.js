@@ -17,7 +17,7 @@ const numProc = os.cpus().length;
 
 //ejecutar server así: npm run dev --puerto 3030 cluster // npm run dev --puerto 3030 fork
 const argumentos = minimist(process.argv)
-//console.log("ppp: ", argumentos)
+console.log("ppp: ", argumentos)
 
 const MONGO_USER = process.env.MONGO_USER;
 const MONGO_PASS = process.env.MONGO_PASS;
@@ -72,7 +72,7 @@ if(argumentos._[3] == 'cluster'){
         })
     })
     
-    const PORT = argumentos._[2] || 8080;
+    const PORT = argumentos._[2] || 8081;
     httpServer.listen(PORT, ()=>{
         console.log("Corriendo en el puerto ", PORT)
     })    
