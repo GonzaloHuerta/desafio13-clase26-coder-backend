@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import {logInfo} from '../loggers/logger.js';
 
 const router = Router();
 
@@ -17,6 +18,7 @@ router.get('/', (req, res)=>{
         }
     }
     console.log('Server connected')
+    logInfo.info(`Ruta: ${req.path}api/randoms | Método ${req.method}`)
     res.send(objetoNumerosRandom);
 })
 

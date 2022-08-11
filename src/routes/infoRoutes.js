@@ -1,5 +1,7 @@
 import {Router} from 'express';
 import os from 'os';
+import compression from 'compression';
+import {logInfo} from '../loggers/logger.js';
 
 const numProc = os.cpus().length;
 const argumentos = process.argv;
@@ -13,7 +15,8 @@ const carpetaProyecto = process.env.INIT_CWD;
 console.log(usoDeMemoria.rss)
 
 const router = Router();
-  router.get('/', (req, res)=>{
+  router.get('/', compression(), (req, res)=>{        //Memoria total reservada: sin gzip: 59297792 || con gzip: 59248640
+    logInfo.info(`Ruta: ${req.path}info | Método ${req.method}`);
     res.render('info', 
     {
       argumentos: argumentos, 

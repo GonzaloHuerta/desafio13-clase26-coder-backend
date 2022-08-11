@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import passport from 'passport';
+import {logError, logInfo} from '../loggers/logger.js';
 
 const router = Router();
 
@@ -12,11 +13,13 @@ const router = Router();
     }
 
     router.get('/', isAuth, (req, res)=>{
-        console.log("req.user: ", req.user)
-        res.render('home', {logueado: true, nombre: req.user.email}); 
+        console.log("req.user: ", req.user);
+        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
+        res.render('home', {logueado: true, nombre: req.user.email});
     })
 
     router.get('/login', (req, res)=>{
+        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
         if(req.user){
             res.redirect('/')
         }else{
@@ -30,10 +33,13 @@ const router = Router();
     }))
 
     router.get('/error-login', (req, res)=>{
+        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
+        logError.error(`Error en el login`);
         res.render('error-login');
     })
 
     router.get('/logout', (req, res)=>{
+        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
         const nombre = req.session.user;
         req.session.destroy(err=>{
             res.render('hasta-luego', {nombre: nombre})
@@ -41,6 +47,7 @@ const router = Router();
     })
 
     router.get('/register', (req, res)=>{
+        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
         if(req.user){
             res.redirect('/')
         }else{
@@ -54,6 +61,8 @@ const router = Router();
     }));
 
     router.get('/error-register', (req, res)=>{
+        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
+        logError.error(`Error en el register`);
         res.render('error-register');
     })
 

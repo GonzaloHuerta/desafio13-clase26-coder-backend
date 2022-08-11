@@ -12,6 +12,7 @@ import apiRandomRoutes from './src/routes/apiRandomRoutes.js';
 import minimist from 'minimist';
 import cluster from 'cluster';
 import os from 'os';
+import {logError, logWarning, logInfo} from './src/loggers/logger.js';
 
 const numProc = os.cpus().length;
 
@@ -24,7 +25,7 @@ const MONGO_PASS = process.env.MONGO_PASS;
 const MONGO_DB_NAME = process.env.MONGO_DB_NAME;
 
 if(argumentos._[3] == 'cluster'){
-    if (cluster.isMaster){
+    if (cluster.isPrimary){
         for (let i = 0; i < numProc; i++) {
             cluster.fork();
         }
@@ -56,6 +57,8 @@ if(argumentos._[3] == 'cluster'){
     
     const mensajes = await api.getAll();
     
+
+
     app.use('/', apiRoutes);
     app.use('/info', infoRoutes);
     app.use('/api/randoms', apiRandomRoutes);
@@ -71,9 +74,20 @@ if(argumentos._[3] == 'cluster'){
             io.sockets.emit('mensajes', mensajes);
         })
     })
+
+    app.get('/*', (req, res)=>{
+        logWarning.warn(`Se intentó acceder a la ruta ${req.path} mediante el método ${req.method} y es inválida`)
+        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`)
+        res.send(`La ruta ${req.path} no existe`)
+    })
     
     const PORT = argumentos._[2] || 8081;
     httpServer.listen(PORT, ()=>{
+        //logPrueba.warn('Warn');
+        /* logPrueba.debug('Debug');
+        logPrueba.error('Error');
+        logPrueba.info("Info"); */
+
         console.log("Corriendo en el puerto ", PORT)
     })    
 }
