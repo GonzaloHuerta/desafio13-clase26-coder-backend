@@ -81,7 +81,7 @@ if(argumentos._[3] == 'cluster'){
         res.send(`La ruta ${req.path} no existe`)
     })
     
-    const PORT = argumentos._[2] || 8081;
+    const PORT = process.env.PORT || argumentos._[2] || 8081;
     httpServer.listen(PORT, ()=>{
         //logPrueba.warn('Warn');
         /* logPrueba.debug('Debug');
