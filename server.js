@@ -92,3 +92,9 @@ if(argumentos._[3] == 'cluster'){
     })    
 }
 
+/* Análisis de performance */
+
+// 1. Ejecuté el servidor en profilling con el siguiente comando: "node --prof-process server.js"
+// 2. Análisis con artillery: utilicé el siguiente comando: "artillery quick --count 20 --num 50 http://localhost:8081 > resultados.txt" Los resultados se encuentran en resultados.txt
+// 3. Análisis con autocannon: utilicé el siguiente comando: "autocannon -d 20 -c 100 http://localhost:8081/api/randoms". Screenshot con los resultados incluido (analisis-autocannon.png)
+// 4. Diagrama de flama con 0x: Inicialicé el servidor con 0x server.js y utilicé los mismos parámetros del punto anterior para autocannon. Se creo la carpeta con gráfico de flama (22252.0x)
