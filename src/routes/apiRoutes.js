@@ -1,6 +1,12 @@
 import {Router} from 'express';
 import passport from 'passport';
 import {logError, logInfo} from '../loggers/logger.js';
+import { renderHome } from '../controllers/homeController.js';
+import { renderLogin } from '../controllers/loginController.js';
+import { renderErrorLogin } from '../controllers/errorLoginController.js';
+import { renderLogout } from '../controllers/logoutController.js';
+import { renderRegister } from '../controllers/registerController.js';
+import { renderErrorRegister } from '../controllers/errorRegisterController.js';
 
 const router = Router();
 
@@ -12,58 +18,26 @@ const router = Router();
         }
     }
 
-    router.get('/', isAuth, (req, res)=>{
-        console.log("req.user: ", req.user);
-        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
-        res.render('home', {logueado: true, nombre: req.user.email});
-    })
+    router.get('/', isAuth, renderHome);
 
-    router.get('/login', (req, res)=>{
-        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
-        if(req.user){
-            res.redirect('/')
-        }else{
-            res.render('login');
-        }
-    })
+    router.get('/login', renderLogin);
 
     router.post('/login', passport.authenticate('login', {
         failureRedirect: '/error-login',
         successRedirect: '/'
     }))
 
-    router.get('/error-login', (req, res)=>{
-        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
-        logError.error(`Error en el login`);
-        res.render('error-login');
-    })
+    router.get('/error-login', renderErrorLogin);
 
-    router.get('/logout', (req, res)=>{
-        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
-        const nombre = req.session.user;
-        req.session.destroy(err=>{
-            res.render('hasta-luego', {nombre: nombre})
-        })
-    })
+    router.get('/logout', renderLogout);
 
-    router.get('/register', (req, res)=>{
-        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
-        if(req.user){
-            res.redirect('/')
-        }else{
-            res.render('register');
-        }
-    })
+    router.get('/register', renderRegister);
 
     router.post('/register', passport.authenticate('register',{
         failureRedirect: '/error-register',
         successRedirect: '/login'
     }));
 
-    router.get('/error-register', (req, res)=>{
-        logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);
-        logError.error(`Error en el register`);
-        res.render('error-register');
-    })
+    router.get('/error-register', renderErrorRegister)
 
 export default router;

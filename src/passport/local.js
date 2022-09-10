@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
-import { usuariosDao } from '../daos/index.js';
-import {UsuariosDaoMongoDb} from '../daos/usuarios/UsuariosDaoMongoDb.js';
+import { usuariosDao } from '../persistencia/daos/index.js';
+import {UsuariosDaoMongoDb} from '../persistencia/daos/usuarios/UsuariosDaoMongoDb.js';
 import bcrypt, { compare } from 'bcrypt';
 
 function encriptar(password){

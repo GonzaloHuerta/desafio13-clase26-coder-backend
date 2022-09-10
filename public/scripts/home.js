@@ -1,5 +1,5 @@
 const socket = io();
-import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
+import { faker } from 'https://cdn.jsdelivr.net/npm/@faker-js/faker/+esm';
 faker.setLocale('es');
 const productos = [];
 
@@ -8,7 +8,7 @@ const generarProductos = ()=>{
         let obj = {};
         obj.nombre = faker.commerce.product();
         obj.precio = faker.commerce.price();
-        obj.foto = faker.image.image();
+        obj.foto = `https://picsum.photos/200/300?random=${i}`;
         productos.push(obj);
     }
 

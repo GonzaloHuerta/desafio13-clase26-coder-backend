@@ -1,18 +1,20 @@
 import express from 'express';
 import http from 'http'
 import {Server as ioServer} from 'socket.io';
-import {mensajesDao as api} from './src/daos/index.js';
+import {mensajesDao as api} from './src/persistencia/daos/index.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import './src/passport/local.js';
 import passport from 'passport';
-import apiRoutes from './src/routes/apiRoutes.js';
-import infoRoutes from './src/routes/infoRoutes.js';
-import apiRandomRoutes from './src/routes/apiRandomRoutes.js';
 import minimist from 'minimist';
 import cluster from 'cluster';
 import os from 'os';
 import {logError, logWarning, logInfo} from './src/loggers/logger.js';
+
+//routes
+import apiRoutes from './src/routes/apiRoutes.js';
+import infoRoutes from './src/routes/infoRoutes.js';
+import apiRandomRoutes from './src/routes/apiRandomRoutes.js';
 
 const numProc = os.cpus().length;
 
@@ -57,8 +59,6 @@ if(argumentos._[3] == 'cluster'){
     
     const mensajes = await api.getAll();
     
-
-
     app.use('/', apiRoutes);
     app.use('/info', infoRoutes);
     app.use('/api/randoms', apiRandomRoutes);
