@@ -1,4 +1,4 @@
-import {logInfo} from '../loggers/logger.js';
+import {logInfo, logError} from '../loggers/logger.js';
 
 export const renderErrorLogin = (req, res)=>{
     logInfo.info(`Ruta: ${req.path} | Método ${req.method}`);

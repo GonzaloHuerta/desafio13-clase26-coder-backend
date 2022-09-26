@@ -1,7 +1,7 @@
 import { ContenedorFirebase } from "../../containers/ContenedorFirebase.js";
 
-export class MensajesDaoFirebase extends ContenedorFirebase {
+export class UsuariosDaoFirebase extends ContenedorFirebase {
     constructor() {
-        super("mensajes");
+        super("usuarios");
     }
 }

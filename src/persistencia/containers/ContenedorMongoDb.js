@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import 'dotenv/config';
+import { activarDTO } from '../dto/productos/productosDto.js';
 
 const MONGO_USER = process.env.MONGO_USER;
 const MONGO_PASS = process.env.MONGO_PASS;
@@ -15,7 +16,7 @@ class ContenedorMongoDb{
     async getByEmail(email){
         try {
             const contenido = await this.collection.findOne({email: email});
-            return contenido;
+            return activarDTO(contenido);
         } catch (error) {
             console.log(error);
         }
@@ -24,7 +25,7 @@ class ContenedorMongoDb{
     async getAll(){
         try {
             const contenido = await this.collection.find({});
-            return contenido;
+            return activarDTO(contenido);
         } catch (error) {
             console.log(error);
         }
@@ -33,7 +34,7 @@ class ContenedorMongoDb{
     async getById(id){
         try {
             const contenido = await this.collection.find({id: id})
-            return contenido;
+            return activarDTO(contenido);
         } catch (error) {
             console.log(error);
         }
@@ -42,7 +43,7 @@ class ContenedorMongoDb{
     async create(obj){
         try {
             const nuevo = await this.collection.create(obj);
-            return nuevo;
+            return activarDTO(nuevo);
         } catch (error) {
             console.log(error);
         }
@@ -51,7 +52,7 @@ class ContenedorMongoDb{
     async deleteById(id){
         try {
             const borrado = await this.collection.deleteOne({id: id});
-            return borrado;
+            return activarDTO(borrado);
         } catch (error) {
             console.log(error);
         }
@@ -60,7 +61,7 @@ class ContenedorMongoDb{
     async update(id, obj) {
         try{
             const actualizado = await this.collection.findByIdAndUpdate(id, obj);
-            return actualizado;
+            return activarDTO(actualizado);
         }catch(error){
             console.log(error);
         }

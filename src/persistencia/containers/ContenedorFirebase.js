@@ -1,23 +1,5 @@
 import admin from 'firebase-admin';
-import {createRequire} from 'module';
-const require = createRequire(import.meta.url);
-import dotenv from "dotenv";
-dotenv.config();
-//import serviceAccount  from '../serviceAccountKey.json';
-//const serviceAccount = require('../serviceAccountKey.json'); 
-
-const serviceAccount = {
-    "type": process.env.SAK_TYPE,
-    "project_id": process.env.SAK_PROJECT_ID,
-    "private_key_id": process.env.SAK_PRIVATE_KEY_ID,
-    "private_key": process.env.SAK_PRIVATE_KEY.replace(/\n/gm, "\n"),
-    "client_email": process.env.SAK_CLIENT_EMAIL,
-    "client_id": process.env.SAK_CLIENT_ID,
-    "auth_uri": process.env.SAK_AUTH_URI,
-    "token_uri": process.env.SAK_TOKEN_URI,
-    "auth_provider_x509_cert_url": process.env.SAK_AUTH_PROVIDER,
-    "client_x509_cert_url": process.env.SAK_CLIENT 
-  }
+import serviceAccount  from '../serviceAccountKey.json';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)

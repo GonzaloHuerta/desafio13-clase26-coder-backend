@@ -7,6 +7,7 @@ import { renderErrorLogin } from '../controllers/errorLoginController.js';
 import { renderLogout } from '../controllers/logoutController.js';
 import { renderRegister } from '../controllers/registerController.js';
 import { renderErrorRegister } from '../controllers/errorRegisterController.js';
+import { getAllProducts, addProduct } from '../controllers/productController.js';
 
 const router = Router();
 
@@ -39,5 +40,9 @@ const router = Router();
     }));
 
     router.get('/error-register', renderErrorRegister)
+
+    //productos
+    router.get('/products', getAllProducts);
+    router.post('/products', addProduct);  
 
 export default router;
