@@ -6,12 +6,14 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --experimental-json-modules server.js",
-    "dev": "node --experimental-json-modules server.js"
+    "dev": "node --experimental-json-modules server.js",
+    "test": "mocha src/test/endpoints.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "chai": "^4.3.6",
     "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",
     "dotenv": "^16.0.1",
@@ -22,6 +24,7 @@
     "knex": "^2.1.0",
     "log4js": "^6.6.1",
     "minimist": "^1.2.6",
+    "mocha": "^10.0.0",
     "mongoose": "^6.4.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.18",
@@ -31,6 +34,7 @@
     "socket.io": "^4.5.1",
     "socket.io-client": "^4.5.1",
     "sqlite3": "^5.0.8",
+    "supertest": "^6.2.4",
     "yargs": "^17.5.1"
   },
   "devDependencies": {

@@ -37,3 +37,4 @@
 [2022-09-26T13:32:49.331] [WARN] warning - Se intentó acceder a la ruta /productos/ mediante el método GET y es inválida
 [2022-09-26T15:18:54.831] [WARN] warning - Se intentó acceder a la ruta /favicon.ico mediante el método GET y es inválida
 [2022-09-26T17:17:25.227] [WARN] warning - Se intentó acceder a la ruta /favicon.ico mediante el método GET y es inválida
+[2022-09-26T21:19:58.453] [WARN] warning - Se intentó acceder a la ruta /productos mediante el método GET y es inválida

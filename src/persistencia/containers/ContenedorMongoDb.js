@@ -33,8 +33,12 @@ class ContenedorMongoDb{
 
     async getById(id){
         try {
-            const contenido = await this.collection.find({id: id})
-            return activarDTO(contenido);
+            const contenido = await this.collection.findById(id)
+            if(contenido){
+                return activarDTO(contenido);
+            }else{
+                console.log("No existe el producto")
+            }
         } catch (error) {
             console.log(error);
         }
@@ -51,8 +55,12 @@ class ContenedorMongoDb{
 
     async deleteById(id){
         try {
-            const borrado = await this.collection.deleteOne({id: id});
-            return activarDTO(borrado);
+            const borrado = await this.collection.findByIdAndDelete(id);
+            if(borrado){
+                return activarDTO(borrado);
+            }else{
+                console.log("No existe producto")
+            }
         } catch (error) {
             console.log(error);
         }
@@ -61,7 +69,12 @@ class ContenedorMongoDb{
     async update(id, obj) {
         try{
             const actualizado = await this.collection.findByIdAndUpdate(id, obj);
-            return activarDTO(actualizado);
+            console.log(actualizado)
+            if(actualizado){
+                return activarDTO(actualizado);
+            }else{
+                console.log("No se pudo actualizar");
+            }
         }catch(error){
             console.log(error);
         }

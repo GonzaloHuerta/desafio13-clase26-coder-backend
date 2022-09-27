@@ -7,7 +7,7 @@ import { renderErrorLogin } from '../controllers/errorLoginController.js';
 import { renderLogout } from '../controllers/logoutController.js';
 import { renderRegister } from '../controllers/registerController.js';
 import { renderErrorRegister } from '../controllers/errorRegisterController.js';
-import { getAllProducts, addProduct } from '../controllers/productController.js';
+import { getAllProducts, addProduct, deleteProduct, editProductById } from '../controllers/productController.js';
 
 const router = Router();
 
@@ -43,6 +43,8 @@ const router = Router();
 
     //productos
     router.get('/products', getAllProducts);
-    router.post('/products', addProduct);  
+    router.post('/products', addProduct);
+    router.delete('/products/:id', deleteProduct);
+    router.put('/products/:id', editProductById)
 
 export default router;

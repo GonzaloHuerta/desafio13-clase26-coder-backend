@@ -13,7 +13,11 @@ const getAllProductsRep = async(req, res)=>{
 const getProductByIdRep = async(req, res)=>{
     const {id} = req.params;
     const product = await api.getById(id);
-    res.json(product);
+    if(product){
+        res.json(product);
+    }else{
+        res.json({error: 'No existe producto con ese id'})
+    }
 }
 
 const addProductRep = async(req, res)=>{
@@ -38,13 +42,23 @@ const addProductRep = async(req, res)=>{
 
 const editProductByIdRep = async(req, res)=>{
     const {id} = req.params;
-    const {timestamp, nombre, descripcion, codigo, foto, precio, stock} = req.body;
-    res.json(await api.editById(id, timestamp, nombre, descripcion, codigo, foto, precio, stock));
+    const editedProduct = await api.update(id, req.body);
+    if(editedProduct){
+        res.json(editedProduct);
+    }else{
+        res.json({error: 'No se pudo editar el producto'})
+    }
 }
 
 const deleteProductRep = async(req, res)=>{
     const {id} = req.params;
-    res.json(await api.deleteById(id));
+    const deletedProduct = await api.deleteById(id);
+    if (deletedProduct){
+        res.json(await api.deleteById(id));
+    }else{
+        res.json({error: "No existe producto con ese id"});
+    }
+    
 }
 
 export {getAllProductsRep, getProductByIdRep, addProductRep, editProductByIdRep, deleteProductRep};
